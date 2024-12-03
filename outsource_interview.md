@@ -33,3 +33,55 @@
 ​	如何使用事务 : `开启事务` : 使用特定数据库语言的语法来启动事务 ; `执行操作` : 在事务开启后 , 执行一系列相关的数据库操作 , 如插入 , 更新 , 删除等语句 ; `提交或回滚事务` : 若所有操作都成功完成 , 使用 COMMIT 语句提交事务 , 将操作结果永久性的保存到数据库 ; 若在操作过程中出现错误或不符合业务逻辑的情况 , 使用 `ROLLBACK` 语句回滚事务 , 撤销已执行的所有操作 , 使数据库恢复到事务开启前的状态
 
 ​	适用场景 : 数据一致性要求高的操作 , 关联数据的更新 , 批量数据处理
+
+****
+
+**SQL中and和or哪个优先级高?**
+
+  在SQL中,`and`的优先级高于`or`.当一个SQL语句中同时使用`and`和`or`时,先计算`and`连接的条件,然后再计算`or`连接的条件,除非使用括号改变执行顺序
+
+****
+
+**vue2和vue3的区别?**
+
+  **1.响应式数据** : `vue2`使用 Object.defineProperty() 来实现响应式,对对象已有数据形象劫持,存在无法检测对象属性新增和删除等局限性; `vue3`采用 Proxy 代理对象,能更高效地跟踪响应式数据变化,可检测到对象属性新增,删除和数组索引变化等情况
+  
+  **组件选项** : `vue2`使用`options API`,通过 `data` , `methods`等选项来定义组件逻辑,数据和逻辑分离不够清晰; `vue3`推荐`composition API`,将相关逻辑代码组合在一起,增强了代码的可读性和可维护性,也支持`option API`
+  
+  **性能优化** : `vue2`虚拟DOM更新时会比较整个树,性能开销较大; `vue3`在虚拟DOM更新时采用了更细粒度的更新,只更新动态绑定的内容,性能更好
+  
+  **模版语法变化**
+
+****
+
+**vue2和vue3如何进行数据双向绑定?**
+
+  **Vue 2** : 通过`Object.defineProperty()`方法对数据进行劫持.当读取数据时进行依赖收集,在数据被修改时会触发更新相关的`Watcher`,从而更新DOM
+  ```java
+    // Vue实例
+new Vue({
+    el: '#app',
+    data: {
+        message: 'Hello Vue 2'
+    }
+})
+  ```
+
+***Vue 3* : 通过`Proxy`对象来代理数据.`Proxy`可以拦截对目标对象的各种操作,如读取,设置,删除等.
+  ```java
+import { createApp, reactive } from 'vue';
+const app = createApp({});
+app.component('MyComponent', {
+    setup() {
+        const state = reactive({
+            message: 'Hello Vue 3'
+        });
+        return {
+            state
+        };
+    },
+    template: '<div>{{ state.message }}</div>'
+});
+app.mount('#app');
+  ```
+  
