@@ -67,7 +67,7 @@ new Vue({
 })
   ```
 
-***Vue 3* : 通过`Proxy`对象来代理数据.`Proxy`可以拦截对目标对象的各种操作,如读取,设置,删除等.
+**Vue 3** : 通过`Proxy`对象来代理数据.`Proxy`可以拦截对目标对象的各种操作,如读取,设置,删除等.
   ```java
 import { createApp, reactive } from 'vue';
 const app = createApp({});
