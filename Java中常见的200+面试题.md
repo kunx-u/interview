@@ -1,6 +1,7 @@
 # 面试200+
 
-![d5417d5c-5af0-46af-929c-4d42563c3ec6](C:\Users\86183\AppData\Local\Temp\d5417d5c-5af0-46af-929c-4d42563c3ec6.png)
+![d5417d5c-5af0-46af-929c-4d42563c3ec6.png](img/d5417d5c-5af0-46af-929c-4d42563c3ec6.png)
+
 
 ## Java基础
 
