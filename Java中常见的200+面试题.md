@@ -2,7 +2,6 @@
 
 ![image-01](imgs/d5417d5c-5af0-46af-929c-4d42563c3ec6.png)
 
-
 ## Java基础
 
 **1. JDK和JRE有什么区别?**
