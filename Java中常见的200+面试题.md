@@ -250,3 +250,97 @@ abstract class Cat {
 ​	实现数量 : 类可以实现很多个接口 , 但是只能继承一个抽象类
 
 ​	访问修饰符 : 接口中的方法默认使用 public 修饰 ; 抽象类中的方法可以是任意访问修饰符
+
+****
+
+**15. Java 中 IO 流分为几种**
+
+​	按流向分 : 输入流(Input Stream) , 输出流(Output Stream)
+
+​	按功能来分: 节点流 , 处理流(包装流)
+
+​	按处理数据单位来分 : 字节流和字符流
+
+​	字节流和字符流的区别是 : 字节流按8位传输以字节为单位输入输出数据 , 字符流按16位传输以字符为单位输入输出数据
+
+****
+
+**16. BIO , NIO , AIO 有什么区别**
+
+​	BIO : Block IO 同步阻塞式 IO , 就是我们平常使用的传统 IO , 它的特点是模式简单使用方便 , 并发处理能力低
+
+​	NIO : New IO 同步非阻塞 IO , 是传统 IO 的升级 , 客户端和服务器端通过 Channel(通道)通讯 , 实现了多路复用
+
+​	AIO : Asynchronous IO 是 NIO 的升级 , 也叫 NIO2 , 实现了异步非堵塞 IO , 异步 IO 的操作基于事件和回调机制
+
+****
+
+**17. FIles的常用方法都有哪些**
+
+​	`Files.exists()` : 检测文件路径是否存在
+
+​	`Files.createFile()` : 创建文件
+
+​	`Files.createDirectory()` : 创建文件夹
+
+​	`Files.delete()` : 删除一个文件或目录
+
+​	`Files.copy()` : 复制文件
+
+​	`Files.move()` : 移动文件
+
+​	`Files.size()` : 查看文件个数
+
+​	`Files.read()` : 读取文件
+
+​	`Files.write()` : 写入文件
+
+****
+
+**18. Java容器都有哪些**
+
+​	Java 容器分为 Collection 和 Map 两大类 , 其下又有很多子类 , 如下:
+
+​	`Collection` , `List` , `ArrayList` , `LInkedList` , `Vector` , `Stack` , `Set` , `HashSet` , 	`LInkedHashSet` , `TreeSet` , `Map` , `HashMap` , `LInkedHashMap` , `TreeMap` , `ConcurrentHashMap` , `Hashtable`
+
+****
+
+**19. Collection 和 Collections 有什么区别**
+
+​	Collection 是一个集合接口 , 它提供了对集合对象进行基本操作的通用接口方法 , 所有集合都是它的子集 , 比如 List , Set 等
+
+​	Collections 是一个包装类 , 包含了很多静态方法 , 不能被实例化 , 就像一个工具类 , 比如提供的排序方法 : Collections.sort(list)
+
+****
+
+**20. List , Set , Map 的区别**
+
+​	List , Set , Map 的区别主要体现在两个方面 : 元素是否有序 , 是否允许元素重复
+
+****
+
+**21. HashMap 和 HashTable 有什么区别?**
+
+​	存储: HashMap 运行 key 和 value 为 null , 而 Hashtable 不允许
+
+​	线程安全 : Hashtable 是线程安全的 , 而 HashMap 是非线程安全的
+
+​	推荐使用 : 在 Hashtable 的类注释可以看到 , Hashtable 是保留类不建议使用 , 推荐在单线程环境下使用 HashMap 替代 , 如果需要多线程使用则用 ConcurrentHashMap 替代
+
+****
+
+**22. 如何决定使用 HashMap 还是 TreeMap?**
+
+​	对于在 Map 中插入 , 删除 , 定位一个元素这类操作 , HashMap 是最好的选择 , 因为相对而言 HashMap 的插入会更快 , 但如果你要对一个 key 集合进行有序的遍历 , 那 TreeMap 是更好的选择
+
+****
+
+**23. 说一下 HashMap 的实现原理?**		
+
+​	HashMap 基于 Hash 算法实现的 , 我们通过 put(key,value)存储 , get(key)来获取 , 当传入 key 时 , HashMap 会根据 key , hashCode() 计算出 hash 值 , 根据 hash 值将 value 保存在 bucket 里 , 当计算出的 hash 值相同时 , 我们称之为 hash 冲突 , HashMap 的做法使用链表和红黑树存储相同 hash 值的value , 当 hash 冲突的个数比较少时 , 使用链表否则使用红黑树
+
+****
+
+**24. 说一下 HashSet 的实现原理?**
+
+​	HashSet 是基于 HashMap 实现的 , HashSet 底层使用 HashMap 来保存所有元素 , 因此 HashSet 的实现比较简单 , 相关 HashSet 的操作 , 基本上都是直接调用底层 HashMap 的相关方法来完成 , HashSet 不允许重复的值
