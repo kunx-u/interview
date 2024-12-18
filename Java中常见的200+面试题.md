@@ -469,3 +469,82 @@ clist.add("y"); // 运行时此行报错
 System.out.println(list.size());
 ```
 
+****
+
+**35. 并行和并发有什么区别?**
+
+​	并行 : 多个任务在同一个 CPU 核上 , 按细分的时间片轮流(交替)执行 , 从逻辑上来看那些任务是同时执行.
+
+​	并发 : 多个处理器或多核处理器同时处理多个任务
+
+****
+
+**36. 线程和进程的区别?**
+
+​	一个程序下至少有一个进程 , 一个进程下至少有一个进程 , 一个进程下也可以有多个线程来增加程序的执行速度
+
+****
+
+**37. 守护线程是什么?**
+
+​	守护线程是运行在后台的一种特殊进程 , 它独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件 , 在 Java 中垃圾回收线程就是特殊的守护线程
+
+****
+
+**38. 创建线程有哪几种方式?**
+
+​	创建线程有三种方式 : 
+
+​		继承 Thread 重写 run() 方法 ;
+
+​		实现 Runnable 接口 ;
+
+​		实现 Callable 接口 .
+
+**39. 说一下 Runnable 和 Callable 有什么区别?**
+
+ Runnable 没有返回值 , Callable 可以拿到有返回值 , Callable 可以看作是 Runnable 的补充
+
+****
+
+**40. 线程有哪些状态?**
+
+​	`NEW  尚未启动`   ,   `RUNNABLE  正在执行中`   ,   `BLOCKED  阻塞的(被同步锁或者IO锁阻塞)`   ,   `WAITING  永久等待状态`   ,   `TIMED_WAITING  等待指定的时间重新被唤醒的状态`    ,    `TERMINATED 执行完成`
+
+****
+
+**41. sleep() 和 wait() 有什么区别?**
+
+​	类的不同 : sleep() 来自 Thread , wait() 来自 Object
+
+​	释放锁 : sleep() 不释放锁 ; wait() 释放锁
+
+​	用法不同 : sleep() 时间到会自动恢复 ; wait() 可以使用 notify() / notifyAll() 直接唤醒
+
+****
+
+**42. notify() 和 notifyAll() 有什么区别?**
+
+​	notifyAll() 会唤醒所有的线程 , notify() 之后唤醒一个线程 , notifyAll() 调用后 , 会将全部线程由等待池移到锁池 , 然后参与锁的竞争 , 竞争成功则继续执行 , 如果不成功则留在锁池等待锁被释放后再次参与竞争 , 而 notify() 只会唤醒一个线程 , 具体唤醒哪一个线程由虚拟机控制
+
+**43. 线程的 run() 和 start() 有什么区别?**
+
+​	start() 方法用于启动线程 , run() 方法用于执行线程的运行时代码 , run() 可以重复调用 , 而 start() 只能调用一次
+
+**44. 创建线程池有哪几种方式?**
+
+​	线程池创建有七种方式 , 最核心的是最后一种 :
+
+​		`newSingleThreadExecutor():`它的特点在于工作线程数目被限制为 1 , 操作一个无界的工作队列 , 所以它保证了所有任务的都是被顺序执行 , 最多会有一个任务处于活动状态 , 并且不允许使用者改动线程池实例 , 因此可以避免其改变线程数目;
+
+​		`newCachedThreadPool():`它是一种用来处理大量短时间工作任务的线程池 , 具有几个鲜明特点 : 它会试图缓存线程并重用 , 当无缓存线程可用时 , 就会创造新的工作线程 ; 如果线程闲置的时间超过 60 秒 , 则被终止并移出缓存 ; 长时间闲置时 , 这种线程池 , 不会消耗什么资源 , 其内部使用 SynchronousQueue 作为工作队列
+
+​		`newFixedThreadPool(int nThreads):`重用指定数目(nThreads)的线程 , 其背后使用的是无界的工作队列 , 任何时候最多有 nThreads 个工作线程是活动 , 这意味着 , 如果任务数量超过了活动队列数目 , 将在工作队列中等待空闲线程出现 ; 如果有工作线程退出 , 将会有新的工作线程被创建 , 以补足指定的数目 nThread;
+
+​		`newSingleThreadScheduledExecutor():`创建单线程池 , 返回 ScheduledExecutorService , 可以进行定时或周期性的工作调度;
+
+​		`newScheduledThreadPool(int corePoolSize)`: 和 newSingleThreadScheduledExecutor() 类似 , 创建的是个 ScheduledExecutorService , 可以进行定时或周期性的工作调度 , 区别在于单一工作线程还是多个工作线程;
+
+​		`newWorkStealingPool(int parallelism)`: 这是一个经常被人忽略的线程池，Java 8 才加入这个创建方法，其内部会构建 ForkJoinPool，利用 Work-Stealing 算法，并行地处理任务，不保证处理顺序；
+
+​	`ThreadPoolExecutor()`: 是最原始的线程池创建，上面 1-3 创建方式都是对ThreadPoolExecutor 的封装。
