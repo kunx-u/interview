@@ -548,3 +548,52 @@ System.out.println(list.size());
 ​		`newWorkStealingPool(int parallelism)`: 这是一个经常被人忽略的线程池，Java 8 才加入这个创建方法，其内部会构建 ForkJoinPool，利用 Work-Stealing 算法，并行地处理任务，不保证处理顺序；
 
 ​	`ThreadPoolExecutor()`: 是最原始的线程池创建，上面 1-3 创建方式都是对ThreadPoolExecutor 的封装。
+
+****
+
+**45. 线程池都有哪些状态?**
+
+​	`RUNNING : `这是最正常的状态 , 接收新的任务 , 处理等待队列中的任务
+
+​	`SHUTDOWN : `不接受新的任务提交 , 但是会继续处理等待队列中的任务
+
+​	`STOP : `不接受新的任务提交 , 不再处理等待队列中的任务 , 中断正在执行任务的线程
+
+​	`TIDYING : `所有的任务都销毁了 , workCount 为 0 , 线程池的状态在转换为`TIDYING`状态时 , 会执行钩子方法 `terminated()`
+
+​	`TERMINATED : ` `terminated()`方法结束后 , 线程池的状态就会变成这个
+
+****
+
+**46. 线程池中 submit() 和 execute() 方法有什么区别?**
+
+​	execute() : 只能执行 Runnable 类型的任务
+
+​	submit() : 可以执行 Runnable 和 Callable 类型的任务
+
+​	Callable 类型的任务可以获取执行的返回值 , 而 Runnable 执行无返回值
+
+****
+
+**47. 在 Java 程序中怎么保证多线程的运行安全?**
+
+​	方法一 : 使用安全类 , 比如 Java.util.concurrent 下的类
+
+​	方法二 : 使用自动锁 synchronized
+
+​	方法三 : 使用手动锁 Lock
+
+​	手动锁 Java 实例代码如下:
+
+```java
+Lock lock = new ReentrantLock();
+lock.lock();
+try{
+    System.out.println("获得锁");
+} catch (Exception e) {
+    // TODO: handle exception
+} finally {
+    System.out.println("释放锁");
+    lock.unlock();
+}
+```
