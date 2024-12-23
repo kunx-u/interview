@@ -445,6 +445,8 @@ while(it.hasNext()){
 
 ​	Iterator 的特点是更加安全 , 因为它可以确保 , 在当前遍历的集合元素被更改的时候 , 就会抛出 ConcurrentModificationException 异常
 
+****
+
 **33. Iterator 和 ListIterator 有什么区别?**
 
 ​	Iterator 可以遍历 Set 和 List 集合 , 而 ListIterator 只能遍历 List
@@ -527,9 +529,13 @@ System.out.println(list.size());
 
 ​	notifyAll() 会唤醒所有的线程 , notify() 之后唤醒一个线程 , notifyAll() 调用后 , 会将全部线程由等待池移到锁池 , 然后参与锁的竞争 , 竞争成功则继续执行 , 如果不成功则留在锁池等待锁被释放后再次参与竞争 , 而 notify() 只会唤醒一个线程 , 具体唤醒哪一个线程由虚拟机控制
 
+****
+
 **43. 线程的 run() 和 start() 有什么区别?**
 
 ​	start() 方法用于启动线程 , run() 方法用于执行线程的运行时代码 , run() 可以重复调用 , 而 start() 只能调用一次
+
+****
 
 **44. 创建线程池有哪几种方式?**
 
