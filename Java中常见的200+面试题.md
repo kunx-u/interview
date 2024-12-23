@@ -597,3 +597,103 @@ try{
     lock.unlock();
 }
 ```
+
+****
+
+**48. 多线程中 synchronized 锁升级的原理是什么?**
+
+​	synchronized 锁升级原理: 在锁对象的对象头里面有一个 threadid 字段 , 在第一次访问的时候 threadid 为空 , jvm 让其持有偏向锁 , 并将 threadid 设置为其线程 id , 再次进入的时候会先判断 threadid 是否与其线程 id 一致 , 如果一致则可以直接使用此对象 , 如果不一致 , 则升级偏向锁为轻量级锁 , 通过自旋循环一定次数来获取锁 , 执行一次次数之后 , 如果还没有正常获取到要使用的对象 , 此时就是把锁从轻量级升级为重量级锁 , 此过程就构成 synchronized 锁的升级
+
+​	锁的升级的目的: 锁升级是为了降低了锁带来的性能消耗 , 在 Java 6 之后优化 synchronized 的实现方式 , 使用了偏向锁升级为轻量级锁再升级到重量级锁的方式 , 从而降低了锁带来的性能消耗.
+
+****
+
+**49. 什么是死锁?**
+
+​	当线程 A 持有独占锁 a , 并尝试去获取独占锁 b 的同时 , 线程 B 持有独占锁 b , 并尝试获取独占锁 a 的情况下 , 就会发生 AB 两个线程由于互相持有对方需要的锁 , 而发生的阻塞现象 , 我们称为死锁
+
+****
+
+**50. 怎么防止死锁?**
+
+​	尽量使用 tryLock(long timeout, TimeUnit unit)的方法(ReentrantLock , ReentrantReadWriteLock) , 设置超时时间 , 超时可以退出防止死锁.
+
+​	尽量使用 Java.util.concurrent 并发类代替自己手写锁
+
+​	尽量降低锁的使用粒度 , 尽量不要几个功能用同一把锁
+
+​	尽量减少同步的代码块
+
+****
+
+**51. ThreadLocal 是什么? 有哪些使用场景?**
+
+​	ThreadLocal 为每个使用该变量的线程提供独立的变量副本 , 所以每一个线程都可以独立地改变自己的副本 , 而不会影响其他线程所对应的副本
+
+​	ThreadLocal 的经典使用场景是数据库连接和 session 管理等
+
+****
+
+**52. 说一下 synchronized 底层实现原理?**
+
+​	synchronized 是由一对 `monitorenter/monitorexit` 指令实现的 , monitor 对象是同步的基本实现单元 , 在 Java 6 之前 , monitor 的实现完全是依靠操作系统内部的互斥锁 , 因为需要进行用户态到内核态的切换 , 所以同步操作是一个无差别的重量级操作 , 性能也很低 , 但在 Java 6 的时候 , Java 虚拟机 对此进行了大刀阔斧地改进 , 提供了三种不同的 monitor 实现 , 也就是常说的三种不同的锁 : 偏向锁(Biased Locking) , 轻量级锁和重量级锁 , 大大改进了其性能
+
+****
+
+**53. synchronized 和 volatile 的区别是什么?**
+
+​	`volatile`是变量修饰符 ; synchronized 是修饰类 , 方法 , 代码段
+
+​	`volatile`仅能实现变量的修改可见性 , 不能保证原子性 ; 而 synchronized 则可以保证变量的修改可见性和原子性
+
+​	`volatile`不会造成线程的阻塞 ; synchronized 可能会造成线程的阻塞
+
+****
+
+**54. synchronized 和 Lock 有什么区别?**
+
+​	`synchronized` 可以给类 , 方法 , 代码块加锁 ; 而 lock 只能给代码块加锁
+
+​	`synchronized`不需要手动获取锁和释放锁 , 使用简单 , 发生异常会自动释放锁 , 不会造成死锁;而 lock需要自己加锁和释放锁 , 如果使用不当没有 unlock() 去释放锁就会造成死锁
+
+​	通过 Lock 可以知道有没有成功获取锁 , 而 synchronized 却无法办到.
+
+****
+
+**55. synchronized 和 ReentrantLock 区别是什么?**
+
+​	synchronized 早期的实现比较低效 , 对比 ReentrantLock , 大多数场景性能都相差较大 , 但是在 Java 6 中对 synchronized 进行了非常多的改进
+
+​	主要区别如下 : 
+
+​		`ReentrantLock`使用起来比较灵活 , 但是必须有释放锁的配合动作;
+
+​		`ReentrantLock`必须手动获取与释放锁 , 而 `synchronized` 不需要手动释放和开启锁;
+
+​		`ReentrantLock`只适用于代码块锁 , 而 `synchronized` 可用于修饰方法 , 代码块等
+
+​		`volatile` 标记的变量不会被编译器优化 ; `synchronized` 标记的变量可以被编译器优化
+
+****
+
+**56. 说一下 atomic 的原理?**
+
+​	`atomic` 主要利用 CAS (Compare And Swap) 和 `volatile`和`native`方法来保证原子操作 , 从而避免 synchronized 的高开销 , 执行效率大为提升
+
+****
+
+**57. 什么是反射?**
+
+​	反射是在运行状态中 , 对于任意一个类 , 都能知道这个类的所有属性和方法 ; 对于任意一个对象 , 都能够调用它的任意一个方法和属性 ; 这种动态获取的信息以及动态调用对象的方法的功能称为 Java 语言的反射机制
+
+**58. 什么是 Java 序列化?什么情况下需要序列化?**
+
+​	`Java 序列化是为了保存各种对象在内存中的状态 , 并且可以把保存的对象状态再读出来`
+
+​	以下情况需要使用 Java 序列化:
+
+​		想把内存中的对象状态保存到一个文件中或者数据中的时候;
+
+​		想用套接字在网络上传送对象的时候;
+
+​		想通过 `RMI(远程方法调用)`传输对象的时候
