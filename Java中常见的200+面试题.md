@@ -819,3 +819,95 @@ try{
 ​	`拦截机制:`struts2 有以自己的 interceptor 机制 , spring mvc 用的是独立的 aop 方式 , 这样导致 struts2 的配置文件量比 spring mvc 大
 
 ​	`对 ajax的支持:`spring mvc 集成了 ajax , 所有 ajax 使用很方便 , 只需要一个注解 @ResponseBody 就可以实现了 ; 而 struts2 一般需要安装插件或者自己写代码才行
+
+****
+
+**71. 如何避免 SQL 注入?**
+
+​	使用预处理 PreparedStatement
+
+​	使用正则表达式过滤掉字符中的特殊字符
+
+****
+
+**72. 什么是 XSS 攻击 , 如何避免?**
+
+​	XSS 攻击: 即跨站脚本 , 它是 Web 程序中常见的漏洞 , 原理是攻击者往 Web 页面里插入恶意的脚本代码(css 代码 , JavaScript 代码等) , 当用户浏览该页面时 , 嵌入其中的脚步代码会被执行 , 从而达到恶意攻击用户的目的 , 如盗取用户 cookie , 破坏页面结构 , 重定向到其他网站等
+
+​	预防 XSS 的核心是必须对输入的数据做过滤页面
+
+****
+
+**73. 什么是 CSRF 攻击 , 如何避免?**
+
+​	CSRF: Cross-Site Request Forgery (中文: 跨站请求伪造) , 可以理解为攻击者盗用了你的身份 , 以你的名义发送恶意请求 , 比如: 以你的名义发送邮件 , 发消息 , 购买商品 . 虚拟货币转账等
+
+​	防御手段:
+
+​		验证请求来源地址;
+
+​		关键操作添加验证码;
+
+​		在请求地址添加 token 并验证
+
+## 异常
+
+**74. throw 和 throws 的区别?**
+
+​	`throw` : 是真实抛出一个异常
+
+​	`throws` : 是声明可能会抛出一个异常
+
+****
+
+**75. final , finally , finalize 有什么区别?**
+
+​	`final` : 是修饰符 , 如果修饰类 , 此类不能被继承 ; 如果修饰方法和变量 , 则表示此方法和此变量不能在被改变 , 只能使用
+
+​	`finally` : 是 try{} catch{} finally{} 最后一部分 , 表示不论发生任何情况都会执行 , finally 部分可以省略 , 但如果 finally 部分存在 , 则一定会执行 finally 里面的代码
+
+​	`finalize` : 是 Object 类的一个方法 , 在垃圾收集器执行的时候会被调用被回收对象的此方法
+
+****
+
+**76. try-catch-finally 中哪个部分可以省略?**
+
+​	try-catch-finally 其中 catch 和 finally 都可以被省略 , 但是不能同时省略 , 也就是说有 try 的时候 , 必须后面跟一个 catch 或者 finally
+
+****
+
+**77. try-catch-finally 中 , 如果 catch 中 return 了 , finally 还会执行吗?**
+
+​	finally 一定会执行 , 即使是 catch 中 return 了 , catch 中的 return 会等 finally 中的代码执行完之后 , 才会执行
+
+****
+
+**78. 常见的异常类有哪些?**
+
+​	`NullPointerException 空指针异常`
+
+​	`ClassNotFoundException 指定类不存在`
+
+​	`NumberFormatException 字符串转换为数字异常`
+
+​	`IndexOutOfBoundException 数组下标越界异常`
+
+​	`ClassCastException 数据类型转换异常`
+
+​	`FileNotFoundException 文件未找到异常`
+
+​	`NoSuchMethodException 方法不存在异常`
+
+​	`IOException IO异常`
+
+​	`SocketException Socket异常`
+
+## 网络
+
+**79. http 响应码 301 和 302 代表的是什么? 有什么区别?**
+
+​	301: 永久重定向
+
+​	302: 暂时重定向
+
+​	它们的区别是 , 301 对搜索引擎优化 (SEO) 更加有利 ; 302 有被提示为网络拦截的风险
